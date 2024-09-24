@@ -38,24 +38,32 @@ public class MassSpawner : MonoBehaviour
 
     public IEnumerator CreateMass(List<GameObject> CreatedMasses, int MaxMass, GameObject Mass)
     {
-        // wait for seconds
+        // Wait for a specified amount of time
         yield return new WaitForSecondsRealtime(Time_To_Instantiate);
 
         if (CreatedMasses.Count <= MaxMass)
         {
-            //Vector2 Position = new Vector2(Random.Range(-pos.x, pos.x), Random.Range(-pos.y, pos.y));
-            Vector2 Position = new Vector2(Random.Range(-20, 20), Random.Range(-20, 20));
-            Position /= 2;
+            // Generate random position
+            Vector2 Position = new Vector2(Random.Range(-20, 20), Random.Range(-20, 20)) / 2;
 
+            // Instantiate the mass or enemy at the random position
             GameObject m = Instantiate(Mass, Position, Quaternion.identity);
 
-            AddMass(m, CreatedMasses);
+            // Check if the object is an enemy (comparing the instantiated object with your Enemy prefab)
+            if (Mass == Enemy)
+            {
+                // Generate random size based on enemySizeRange
+                float randomSize = Random.Range(1.0f, 3.0f);
 
+                m.transform.localScale = new Vector3(randomSize, randomSize, randomSize);
+            }
+
+            // Add the mass/enemy to the list
+            AddMass(m, CreatedMasses);
         }
 
+        // Continue to instantiate objects
         StartCoroutine(CreateMass(CreatedMasses, MaxMass, Mass));
-
-
     }
 
     public void AddMass(GameObject m, List<GameObject> CreatedMasses)
@@ -70,6 +78,7 @@ public class MassSpawner : MonoBehaviour
             }
         }
     }
+
     public void RemoveMass(GameObject m, List<GameObject> CreatedMasses)
     {
         if (CreatedMasses.Contains(m) == true)
@@ -83,6 +92,10 @@ public class MassSpawner : MonoBehaviour
         }
     }
 
+    public void StopAllMassSpawning()
+    {
+        StopAllCoroutines();
+    }
 
     public void OnDrawGizmosSelected()
     {

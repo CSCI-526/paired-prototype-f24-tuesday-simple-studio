@@ -13,6 +13,7 @@ public class PlayerEatMass : MonoBehaviour
     {
         Mass = GameObject.FindGameObjectsWithTag("Mass");
     }
+
     public void UpdateEnemy()
     {
         Mass = GameObject.FindGameObjectsWithTag("Enemy");
@@ -58,20 +59,30 @@ public class PlayerEatMass : MonoBehaviour
 
             if (Vector2.Distance(transform.position, m.position) <= (transform.localScale.x  + Player.localScale.x)/2)
             {
-                RemoveMass(m.gameObject);
-                // eat 
-                PlayerEat();
-
-                // destroy
                 if (m.gameObject.CompareTag("Mass"))
                 {
+                    // Eat the mass/food
+                    RemoveMass(m.gameObject);
+                    PlayerEat();
                     ms.RemoveMass(m.gameObject, ms.CreatedMasses);  // Remove from CreatedMasses
+                    Destroy(m.gameObject);
                 }
                 else if (m.gameObject.CompareTag("Enemy"))
                 {
-                    ms.RemoveMass(m.gameObject, ms.CreatedEnemies);  // Remove from CreatedEnemies
+                    // Compare sizes between player and enemy
+                    if (transform.localScale.x > m.localScale.x)
+                    {
+                        RemoveMass(m.gameObject);
+                        PlayerEat();
+                        ms.RemoveMass(m.gameObject, ms.CreatedEnemies);
+                        Destroy(m.gameObject);
+                    }
+                    else
+                    {
+                        Debug.Log("Game Over: Enemy ate the player!");
+                        GameOver();
+                    }
                 }
-                Destroy(m.gameObject);
             }
         }
     }
@@ -79,6 +90,16 @@ public class PlayerEatMass : MonoBehaviour
     public void CheckEnemy()
     {
         CheckGameObject(Enemies);
+    }
+
+    public void GameOver()
+    {
+        CancelInvoke("Check");
+        CancelInvoke("CheckEnemy");
+
+        ms.StopAllMassSpawning();
+
+        Destroy(gameObject);
     }
 
     MassSpawner ms;
