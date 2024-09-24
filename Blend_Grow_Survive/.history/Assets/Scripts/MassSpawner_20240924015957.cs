@@ -42,8 +42,7 @@ public class MassSpawner : MonoBehaviour
 
         if (CreatedMasses.Count <= MaxMass)
         {
-            //Vector2 Position = new Vector2(Random.Range(-pos.x, pos.x), Random.Range(-pos.y, pos.y));
-            Vector2 Position = new Vector2(Random.Range(-20, 20), Random.Range(-20, 20));
+            Vector2 Position = new Vector2(Random.Range(-pos.x, pos.x), Random.Range(-pos.y, pos.y));
             Position /= 2;
 
             GameObject m = Instantiate(Mass, Position, Quaternion.identity);
