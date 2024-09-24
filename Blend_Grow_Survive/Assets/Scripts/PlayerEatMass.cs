@@ -47,21 +47,6 @@ public class PlayerEatMass : MonoBehaviour
     public void Check()
     {
         CheckGameObject(Mass);
-        //for (int i = 0; i < Mass.Length; i++)
-        //{
-        //    Transform m = Mass[i].transform;
-
-        //    if (Vector2.Distance(transform.position, m.position) <= transform.localScale.x / 2)
-        //    {
-        //        RemoveMass(m.gameObject);
-        //        // eat 
-        //        PlayerEat();
-
-        //        // destroy
-        //        ms.RemoveMass(m.gameObject);
-        //        Destroy(m.gameObject);
-        //    }
-        //}
     }
 
     public void CheckGameObject(GameObject[] Mass)
