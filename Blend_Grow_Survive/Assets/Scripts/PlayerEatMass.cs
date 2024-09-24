@@ -7,6 +7,7 @@ public class PlayerEatMass : MonoBehaviour
 
     public GameObject[] Mass;
     public GameObject[] Enemies;
+    public Transform Player;
 
     public void UpdateMass()
     {
@@ -55,7 +56,7 @@ public class PlayerEatMass : MonoBehaviour
         {
             Transform m = Mass[i].transform;
 
-            if (Vector2.Distance(transform.position, m.position) <= transform.localScale.x / 2)
+            if (Vector2.Distance(transform.position, m.position) <= (transform.localScale.x  + Player.localScale.x)/2)
             {
                 RemoveMass(m.gameObject);
                 // eat 

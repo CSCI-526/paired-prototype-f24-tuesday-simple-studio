@@ -400,6 +400,7 @@ MonoBehaviour:
   MaxEnemies: 10
   CreatedEnemies: []
   enemySizeRange: {x: 0, y: 0}
+  enemyspeed: 0
 --- !u!4 &1603899290
 Transform:
   m_ObjectHideFlags: 0
@@ -531,6 +532,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Mass: []
   Enemies: []
+  Player: {fileID: 2032329666}
 --- !u!114 &2032329668
 MonoBehaviour:
   m_ObjectHideFlags: 0
