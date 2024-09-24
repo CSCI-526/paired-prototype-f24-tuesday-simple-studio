@@ -24,13 +24,19 @@ public class MassSpawner : MonoBehaviour
     public float Time_To_Instantiate = 0.5f;
     public Vector2 pos;
 
+    public GameObject Enemy;
+    public int MaxEnemies = 10;
+    public List<GameObject> CreatedEnemies = new List<GameObject>();
+    public Vector2 enemySizeRange;
+
 
     private void Start()
     {
-        StartCoroutine(CreateMass());
+        StartCoroutine(CreateMass(CreatedMasses, MaxMass, Mass));
+        StartCoroutine(CreateMass(CreatedEnemies, MaxEnemies, Enemy));
     }
 
-    public IEnumerator CreateMass()
+    public IEnumerator CreateMass(List<GameObject> CreatedMasses, int MaxMass, GameObject Mass)
     {
         // wait for seconds
         yield return new WaitForSecondsRealtime(Time_To_Instantiate);
@@ -42,16 +48,42 @@ public class MassSpawner : MonoBehaviour
 
             GameObject m = Instantiate(Mass, Position, Quaternion.identity);
 
-            AddMass(m);
+            AddMass(m, CreatedMasses);
 
         }
 
-        StartCoroutine(CreateMass());
+        StartCoroutine(CreateMass(CreatedMasses, MaxMass, Mass));
 
 
     }
 
-    public void AddMass(GameObject m)
+    public IEnumerator CreateEnemy()
+    {
+        // Wait for the specified time before creating an Enemy
+        yield return new WaitForSecondsRealtime(Time_To_Instantiate);
+
+        // Check if the number of Enemies is less than the maximum allowed
+        if (CreatedEnemies.Count < MaxEnemies)
+        {
+            // Generate a random position within the defined range
+            Vector2 randomPosition = new Vector2(Random.Range(-pos.x, pos.x), Random.Range(-pos.y, pos.y));
+
+            // Generate a random size for the Enemy
+            float randomSize = Random.Range(enemySizeRange.x, enemySizeRange.y);
+
+            // Instantiate the Enemy object
+            GameObject enemy = Instantiate(Enemy, randomPosition, Quaternion.identity);
+            enemy.transform.localScale = new Vector3(randomSize, randomSize, 1);  // Apply random size to the Enemy
+
+            // Add the Enemy to the list
+            CreatedEnemies.Add(enemy);
+        }
+
+        // Continue spawning Enemies
+        StartCoroutine(CreateEnemy());
+    }
+
+    public void AddMass(GameObject m, List<GameObject> CreatedMasses)
     {
         if (CreatedMasses.Contains(m) == false)
         {
@@ -63,7 +95,7 @@ public class MassSpawner : MonoBehaviour
             }
         }
     }
-    public void RemoveMass(GameObject m)
+    public void RemoveMass(GameObject m, List<GameObject> CreatedMasses)
     {
         if (CreatedMasses.Contains(m) == true)
         {

@@ -25,7 +25,7 @@ public class Actions : MonoBehaviour
         // apply force
         b.GetComponent<MassForce>().ApplyForce = true;
         // add mass to the player
-        ms.AddMass(b);
+        ms.AddMass(b, ms.CreatedMasses);
         // lose mass
         transform.localScale -= new Vector3(0.05f, 0.05f, 0.05f);
     }
