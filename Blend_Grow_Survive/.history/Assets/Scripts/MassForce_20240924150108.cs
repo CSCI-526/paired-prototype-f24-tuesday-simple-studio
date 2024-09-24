@@ -7,11 +7,11 @@ public class MassForce : MonoBehaviour
 
     public bool ApplyForce = false;
 
-    public float Speed = 20f;
-    public float LoseSpeed = 100f;
+    public float Speed = 30f;
+    public float LoseSpeed = 140f;
 
     public float RandomRotation = 10f;
-    public float RandomeForce = 3f;
+    public float RandomeForce = 5f;
 
     // Boundary limits
     private float boundaryX = 10f;
