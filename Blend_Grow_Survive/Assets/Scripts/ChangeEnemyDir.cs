@@ -26,8 +26,8 @@ public class ChangeEnemyDir : MonoBehaviour
 
     void SetRandomTargetPosition()
     {
-        float randomX = Random.Range(-10, 10); 
-        float randomY = Random.Range(-10, 10); 
+        float randomX = Random.Range(-10, 10);
+        float randomY = Random.Range(-10, 10);
 
         targetPosition = new Vector3(randomX, randomY, transform.position.z); 
     }

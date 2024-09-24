@@ -27,7 +27,7 @@ public class Actions : MonoBehaviour
         // add mass to the player
         ms.AddMass(b, ms.CreatedMasses);
         // lose mass
-        transform.localScale -= new Vector3(0.05f, 0.05f, 0.05f);
+        transform.localScale -= new Vector3(0.1f, 0.1f, 0.1f);
     }
 
     // Start is called before the first frame update

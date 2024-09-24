@@ -22,6 +22,7 @@ public class MassSpawner : MonoBehaviour
     public List<GameObject> CreatedMasses = new List<GameObject>();
     public int MaxMass = 50;
     public float Time_To_Instantiate = 0.5f;
+    public float Time_To_Instantiate_Enemy = 5.0f;
     public Vector2 pos;
     public GameObject Enemy;
     public int MaxEnemies = 10;
@@ -32,38 +33,83 @@ public class MassSpawner : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(CreateMass(CreatedMasses, MaxMass, Mass));
-        StartCoroutine(CreateMass(CreatedEnemies, MaxEnemies, Enemy));
+        // Create 5 enemies at the beginning
+        for (int i = 0; i < 5; i++)
+        {
+            if (CreatedEnemies.Count < MaxEnemies)
+            {
+                Vector2 Position = GetRandomValidPosition();
+                GameObject m = Instantiate(Enemy, Position, Quaternion.identity);
+
+                // Generate random size for enemies
+                float randomSize = Random.Range(1.0f, 3.0f);
+                m.transform.localScale = new Vector3(randomSize, randomSize, randomSize);
+
+                AddMass(m, CreatedEnemies);
+            }
+        }
+        StartCoroutine(CreateFood());
+        StartCoroutine(CreateEnemy());
     }
 
-    public IEnumerator CreateMass(List<GameObject> CreatedMasses, int MaxMass, GameObject Mass)
+    // Coroutine to spawn food at the speed defined by Time_To_Instantiate
+    public IEnumerator CreateFood()
     {
-        // Wait for a specified amount of time
-        yield return new WaitForSecondsRealtime(Time_To_Instantiate);
-
-        if (CreatedMasses.Count <= MaxMass)
+        while (true)
         {
-            // Generate random position
-            Vector2 Position = new Vector2(Random.Range(-20, 20), Random.Range(-20, 20)) / 2;
+            yield return new WaitForSecondsRealtime(Time_To_Instantiate);
 
-            // Instantiate the mass or enemy at the random position
-            GameObject m = Instantiate(Mass, Position, Quaternion.identity);
-
-            // Check if the object is an enemy (comparing the instantiated object with your Enemy prefab)
-            if (Mass == Enemy)
+            if (CreatedMasses.Count < MaxMass)
             {
-                // Generate random size based on enemySizeRange
-                float randomSize = Random.Range(1.0f, 3.0f);
-
-                m.transform.localScale = new Vector3(randomSize, randomSize, randomSize);
+                Vector2 Position = GetRandomValidPosition();
+                GameObject m = Instantiate(Mass, Position, Quaternion.identity);
+                AddMass(m, CreatedMasses);
             }
+        }
+    }
 
-            // Add the mass/enemy to the list
-            AddMass(m, CreatedMasses);
+    // Coroutine to spawn enemies at the speed defined by Time_To_Instantiate_Enemy
+    public IEnumerator CreateEnemy()
+    {
+        while (true)
+        {
+            yield return new WaitForSecondsRealtime(Time_To_Instantiate_Enemy);
+
+            if (CreatedEnemies.Count < MaxEnemies)
+            {
+                Vector2 Position = GetRandomValidPosition();
+                GameObject m = Instantiate(Enemy, Position, Quaternion.identity);
+
+                // Generate random size for enemies
+                float randomSize = Random.Range(1.0f, 3.0f);
+                m.transform.localScale = new Vector3(randomSize, randomSize, randomSize);
+
+                AddMass(m, CreatedEnemies);
+            }
+        }
+    }
+
+    // Get a random position that is not too close to the player
+    public Vector2 GetRandomValidPosition()
+    {
+        Vector2 Position = Vector2.zero;
+        bool validPosition = false;
+
+        // Get the player's position
+        Vector2 playerPosition = transform.position;
+
+        // Keep generating positions until we find one that is far enough from the player
+        while (!validPosition)
+        {
+            Position = new Vector2(Random.Range(-20, 20), Random.Range(-20, 20)) / 2;
+
+            if (Vector2.Distance(Position, playerPosition) > 0.5f)
+            {
+                validPosition = true;  // Position is valid
+            }
         }
 
-        // Continue to instantiate objects
-        StartCoroutine(CreateMass(CreatedMasses, MaxMass, Mass));
+        return Position;
     }
 
     public void AddMass(GameObject m, List<GameObject> CreatedMasses)
