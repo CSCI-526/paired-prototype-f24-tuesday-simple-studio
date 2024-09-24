@@ -23,7 +23,6 @@ public class MassSpawner : MonoBehaviour
     public int MaxMass = 50;
     public float Time_To_Instantiate = 0.5f;
     public Vector2 pos;
-
     public GameObject Enemy;
     public int MaxEnemies = 10;
     public List<GameObject> CreatedEnemies = new List<GameObject>();
