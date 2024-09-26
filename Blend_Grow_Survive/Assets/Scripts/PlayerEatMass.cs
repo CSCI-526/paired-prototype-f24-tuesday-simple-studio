@@ -81,12 +81,14 @@ public class PlayerEatMass : MonoBehaviour
                     if (m.gameObject.CompareTag("Mass"))
                     {
                         ms.RemoveMass(m.gameObject, ms.CreatedMasses);
+                        Destroy(m.gameObject);
                     }
                     else
                     {
                         ms.RemoveMass(m.gameObject, ms.CreatedAmmos);
+                        Destroy(m.gameObject);
+                        ms.CreateBullet();
                     }
-                    Destroy(m.gameObject);
                 }
                 else if (m.gameObject.CompareTag("Enemy"))
                 {

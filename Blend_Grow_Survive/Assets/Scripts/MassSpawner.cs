@@ -54,15 +54,11 @@ public class MassSpawner : MonoBehaviour
         StartCoroutine(CreateEnemy());
     }
 
-    //public void CreateBullet()
-    //{
-    //    Vector2 Position = Players[0].
-    //    GameObject m = Instantiate(Enemy, Position, Quaternion.identity);
-
-    //    // Generate random size for enemies
-    //    float randomSize = Random.Range(1.0f, 3.0f);
-    //    m.transform.localScale = new Vector3(randomSize, randomSize, randomSize);
-    //}
+    public void CreateBullet()
+    {
+        Vector2 Position = Players[0].transform.position;
+        GameObject m = Instantiate(bullet, Position, Quaternion.identity);
+    }
     // Coroutine to spawn food at the speed defined by Time_To_Instantiate
     public IEnumerator CreateFood()
     {
