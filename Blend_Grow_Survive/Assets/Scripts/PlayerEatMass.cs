@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerEatMass : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class PlayerEatMass : MonoBehaviour
     public GameObject[] Mass;
     public GameObject[] Enemies;
     public Transform Player;
+    public Text gameOverText;
 
     public void UpdateMass()
     {
@@ -76,10 +78,13 @@ public class PlayerEatMass : MonoBehaviour
                         PlayerEat();
                         ms.RemoveMass(m.gameObject, ms.CreatedEnemies);
                         Destroy(m.gameObject);
+                        if (ms.CreatedEnemies.Count == 0)
+                        {
+                            WinGame();
+                        }
                     }
                     else
                     {
-                        Debug.Log("Game Over: Enemy ate the player!");
                         GameOver();
                     }
                 }
@@ -99,7 +104,22 @@ public class PlayerEatMass : MonoBehaviour
 
         ms.StopAllMassSpawning();
 
+        Debug.Log("Game Over!");
+
         Destroy(gameObject);
+        Time.timeScale = 0;
+    }
+
+    public void WinGame()
+    {
+        CancelInvoke("Check");
+        CancelInvoke("CheckEnemy");
+
+        ms.StopAllMassSpawning();
+
+        Debug.Log("You Win!");
+
+        Time.timeScale = 0;
     }
 
     MassSpawner ms;
