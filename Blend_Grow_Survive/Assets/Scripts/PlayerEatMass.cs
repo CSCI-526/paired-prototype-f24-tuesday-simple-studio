@@ -70,8 +70,10 @@ public class PlayerEatMass : MonoBehaviour
                 continue;
             }
             Transform m = Mass[i].transform;
+            float playerRadius = transform.localScale.x / 2;
+            float objectRadius = m.localScale.x / 2;
 
-            if (Vector2.Distance(transform.position, m.position) <= (transform.localScale.x + Player.localScale.x) / 2)
+            if (Vector2.Distance(transform.position, m.position) <= playerRadius + objectRadius)
             {
                 if (m.gameObject.CompareTag("Mass") || m.gameObject.CompareTag("ammo"))
                 {
