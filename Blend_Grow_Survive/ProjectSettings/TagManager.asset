@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Mass
   - Enemy
+  - ammo
   layers:
   - Default
   - TransparentFX

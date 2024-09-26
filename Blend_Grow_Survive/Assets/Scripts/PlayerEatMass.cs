@@ -8,6 +8,7 @@ public class PlayerEatMass : MonoBehaviour
 
     public GameObject[] Mass;
     public GameObject[] Enemies;
+    public GameObject[] Ammos;
     public Transform Player;
     public Text gameOverText;
 
@@ -19,6 +20,11 @@ public class PlayerEatMass : MonoBehaviour
     public void UpdateEnemy()
     {
         Mass = GameObject.FindGameObjectsWithTag("Enemy");
+    }
+
+    public void UpdateAmmo()
+    {
+        Ammos = GameObject.FindGameObjectsWithTag("ammo");
     }
 
     public void RemoveMass(GameObject MassObject)
@@ -57,16 +63,27 @@ public class PlayerEatMass : MonoBehaviour
     {
         for (int i = 0; i < Mass.Length; i++)
         {
+            if (Mass[i] == null)
+            {
+                continue;
+            }
             Transform m = Mass[i].transform;
 
-            if (Vector2.Distance(transform.position, m.position) <= (transform.localScale.x  + Player.localScale.x)/2)
+            if (Vector2.Distance(transform.position, m.position) <= (transform.localScale.x + Player.localScale.x) / 2)
             {
-                if (m.gameObject.CompareTag("Mass"))
+                if (m.gameObject.CompareTag("Mass") || m.gameObject.CompareTag("ammo"))
                 {
                     // Eat the mass/food
                     RemoveMass(m.gameObject);
                     PlayerEat();
-                    ms.RemoveMass(m.gameObject, ms.CreatedMasses);  // Remove from CreatedMasses
+                    if (m.gameObject.CompareTag("Mass"))
+                    {
+                        ms.RemoveMass(m.gameObject, ms.CreatedMasses);
+                    }
+                    else
+                    {
+                        ms.RemoveMass(m.gameObject, ms.CreatedAmmos);
+                    }
                     Destroy(m.gameObject);
                 }
                 else if (m.gameObject.CompareTag("Enemy"))
@@ -95,6 +112,11 @@ public class PlayerEatMass : MonoBehaviour
     public void CheckEnemy()
     {
         CheckGameObject(Enemies);
+    }
+
+    public void CheckAmmo()
+    {
+        CheckGameObject(Ammos);
     }
 
     public void GameOver()
@@ -128,8 +150,10 @@ public class PlayerEatMass : MonoBehaviour
     {
         UpdateMass();
         UpdateEnemy();
+        UpdateAmmo();
         InvokeRepeating("Check", 0, 0.1f);
         InvokeRepeating("CheckEnemy", 0, 0.1f);
+        InvokeRepeating("CheckAmmo", 0, 0.1f);
         ms = MassSpawner.ins;
 
         ms.Players.Add(gameObject);

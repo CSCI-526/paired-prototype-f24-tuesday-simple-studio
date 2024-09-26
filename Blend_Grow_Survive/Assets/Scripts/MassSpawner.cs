@@ -30,6 +30,7 @@ public class MassSpawner : MonoBehaviour
     public Vector2 enemySizeRange;
     public float enemyspeed;
 
+    public List<GameObject> CreatedAmmos = new List<GameObject>();
 
     private void Start()
     {
