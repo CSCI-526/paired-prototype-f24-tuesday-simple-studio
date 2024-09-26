@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerEatMass : MonoBehaviour
 {
@@ -10,7 +11,8 @@ public class PlayerEatMass : MonoBehaviour
     public GameObject[] Enemies;
     public GameObject[] Ammos;
     public Transform Player;
-    public Text gameOverText;
+    public Text resultText;
+    public Button restartButton;
 
     public void UpdateMass()
     {
@@ -126,10 +128,13 @@ public class PlayerEatMass : MonoBehaviour
 
         ms.StopAllMassSpawning();
 
-        Debug.Log("Game Over!");
+        resultText.text = "Game Over!";
+        resultText.gameObject.SetActive(true);
+        restartButton.gameObject.SetActive(true);
 
-        Destroy(gameObject);
-        Time.timeScale = 0;
+        gameObject.SetActive(false);
+
+        Time.timeScale = 0f;
     }
 
     public void WinGame()
@@ -139,9 +144,21 @@ public class PlayerEatMass : MonoBehaviour
 
         ms.StopAllMassSpawning();
 
-        Debug.Log("You Win!");
+        resultText.text = "You Win!";
+        resultText.gameObject.SetActive(true);
+        restartButton.gameObject.SetActive(true);
 
-        Time.timeScale = 0;
+        gameObject.SetActive(false);
+
+        Time.timeScale = 0f;
+    }
+
+    public void RestartGame()
+    {
+        Time.timeScale = 1;
+
+        // Reload the current scene
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     MassSpawner ms;
