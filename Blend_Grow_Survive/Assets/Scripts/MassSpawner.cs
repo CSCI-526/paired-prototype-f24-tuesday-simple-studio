@@ -31,6 +31,7 @@ public class MassSpawner : MonoBehaviour
     public float enemyspeed;
 
     public List<GameObject> CreatedAmmos = new List<GameObject>();
+    public List<GameObject> CreatedBullet = new List<GameObject>();
     public GameObject bullet;
 
     private void Start()
@@ -58,6 +59,7 @@ public class MassSpawner : MonoBehaviour
     {
         Vector2 Position = Players[0].transform.position;
         GameObject m = Instantiate(bullet, Position, Quaternion.identity);
+        CreatedBullet.Add(m);
     }
     // Coroutine to spawn food at the speed defined by Time_To_Instantiate
     public IEnumerator CreateFood()

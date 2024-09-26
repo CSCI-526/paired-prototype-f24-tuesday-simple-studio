@@ -731,6 +731,7 @@ MonoBehaviour:
   enemyspeed: 0
   CreatedAmmos:
   - {fileID: 256303192}
+  CreatedBullet: []
   bullet: {fileID: 7928638507455134860, guid: ed5434c3339b9cb42af4afc5035e031c, type: 3}
 --- !u!4 &1603899290
 Transform:
@@ -983,6 +984,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 10
+  Bullet: {fileID: 7928638507455134860, guid: ed5434c3339b9cb42af4afc5035e031c, type: 3}
 --- !u!212 &2032329665
 SpriteRenderer:
   m_ObjectHideFlags: 0
