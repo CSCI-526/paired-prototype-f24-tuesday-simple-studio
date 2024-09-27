@@ -61,6 +61,20 @@ public class MassSpawner : MonoBehaviour
         GameObject m = Instantiate(bullet, Position, Quaternion.identity);
         CreatedBullet.Add(m);
     }
+
+    public void DestroyPlayerBullet()
+    {
+        if (CreatedBullet.Count > 0)
+        {
+            GameObject playerBullet = CreatedBullet[0];
+            if (playerBullet != null)
+            {
+                Destroy(playerBullet);  // Destroy the bullet
+                CreatedBullet.RemoveAt(0);
+            }
+        }
+    }
+
     // Coroutine to spawn food at the speed defined by Time_To_Instantiate
     public IEnumerator CreateFood()
     {

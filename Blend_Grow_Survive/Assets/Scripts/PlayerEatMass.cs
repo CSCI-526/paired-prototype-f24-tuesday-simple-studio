@@ -131,6 +131,7 @@ public class PlayerEatMass : MonoBehaviour
         CancelInvoke("CheckEnemy");
 
         ms.StopAllMassSpawning();
+        ms.DestroyPlayerBullet();
 
         resultText.text = "Game Over!";
         resultText.gameObject.SetActive(true);
@@ -151,8 +152,6 @@ public class PlayerEatMass : MonoBehaviour
         resultText.text = "You Win!";
         resultText.gameObject.SetActive(true);
         restartButton.gameObject.SetActive(true);
-
-        gameObject.SetActive(false);
 
         Time.timeScale = 0f;
     }
