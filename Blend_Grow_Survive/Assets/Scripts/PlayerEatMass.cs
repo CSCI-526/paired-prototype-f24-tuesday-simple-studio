@@ -13,6 +13,7 @@ public class PlayerEatMass : MonoBehaviour
     public Transform Player;
     public Text resultText;
     public Button restartButton;
+    public bool eatammo = false;
 
     public void UpdateMass()
     {
@@ -89,6 +90,7 @@ public class PlayerEatMass : MonoBehaviour
                     {
                         ms.RemoveMass(m.gameObject, ms.CreatedAmmos);
                         Destroy(m.gameObject);
+                        eatammo = true;
                         ms.CreateBullet();
                     }
                 }

@@ -42,16 +42,18 @@ public class PlayerShoot : MonoBehaviour
     private bool hasShot = false; // To ensure player can only shoot once
     private Vector2 mousePosition;
     private Vector2 direction;
+    PlayerEatMass mass_script;
 
     void Start()
     {
+        mass_script = GetComponent<PlayerEatMass>();
         ms = MassSpawner.ins;
         ms.Players.Add(gameObject);
     }
     void Update()
     {
         HandleGunRotation();
-        if (Input.GetMouseButtonDown(0) && !hasShot) // Left mouse click and player hasn't shot yet
+        if (Input.GetMouseButtonDown(0) && !hasShot && mass_script.eatammo) // Left mouse click and player hasn't shot yet
         {
             Shoot();
             ms.DestroyPlayerBullet();
