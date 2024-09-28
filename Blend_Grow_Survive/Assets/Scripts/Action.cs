@@ -5,6 +5,7 @@ using UnityEngine;
 public class Actions : MonoBehaviour
 {
     public GameObject Mass;
+    public GameObject tMass;
     public Transform MassPosition;
     public float Percentage = 0.01f;
 
@@ -20,14 +21,14 @@ public class Actions : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 0, Z_Rotation);
 
         // instantiate mass 
-        GameObject b = Instantiate(Mass, MassPosition.position, Quaternion.identity);
+        GameObject b = Instantiate(tMass, MassPosition.position, Quaternion.identity);
 
         // apply force
         b.GetComponent<MassForce>().ApplyForce = true;
         // add mass to the player
-        ms.AddMass(b, ms.CreatedMasses);
+        //ms.AddMass(b, ms.CreatedMasses);
         // lose mass
-        transform.localScale -= new Vector3(0.1f, 0.1f, 0.1f);
+        transform.localScale -= new Vector3(0.03f, 0.03f, 0.03f);
     }
 
     // Start is called before the first frame update
