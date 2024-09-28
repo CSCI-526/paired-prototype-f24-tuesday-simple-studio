@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 public class BulletAttack : MonoBehaviour
@@ -7,12 +8,10 @@ public class BulletAttack : MonoBehaviour
     public LayerMask enemyLayerMask; // Assign the layer for enemies in the Inspector
 
     private Vector3 startPosition;  // To track where the bullet was spawned
-    MassSpawner ms;
 
     void Start()
     {
         startPosition = transform.position;  // Record the start position when the bullet is spawned
-        ms = MassSpawner.ins;  // Reference to the MassSpawner instance
     }
 
     void Update()
@@ -34,19 +33,7 @@ public class BulletAttack : MonoBehaviour
             if (hit.collider.CompareTag("Enemy"))
             {
                 Destroy(hit.collider.gameObject);  // Destroy the enemy
-
-                // Remove the enemy from the CreatedEnemies list
-                ms.RemoveMass(hit.collider.gameObject, ms.CreatedEnemies);
-
-                // Destroy the bullet itself
-                Destroy(gameObject);
-
-                // Check if all enemies are destroyed
-                if (ms.CreatedEnemies.Count == 0)
-                {
-                    // If there are no enemies left, call WinGame
-                    FindObjectOfType<PlayerEatMass>().WinGame();
-                }
+                Destroy(gameObject);  // Destroy the bullet itself
             }
         }
     }
