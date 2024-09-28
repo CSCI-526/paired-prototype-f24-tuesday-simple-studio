@@ -1111,9 +1111,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 062486e5383404eda826273c45af8d6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 2032329663}
   bulletPrefab: {fileID: 7928638507455134860, guid: ed5434c3339b9cb42af4afc5035e031c, type: 3}
+  bulletSpawnPoint: {fileID: 2032329666}
   bulletSpeed: 10
-  bulletOffset: {x: 0.5, y: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

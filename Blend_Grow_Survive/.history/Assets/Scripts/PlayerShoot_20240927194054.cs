@@ -32,9 +32,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PlayerShoot : MonoBehaviour
 {
     [SerializeField] private GameObject player;
+    //[SerializeField] private GameObject bullet;
     public GameObject bulletPrefab; // Assign the bullet prefab in the inspector
     public Transform bulletSpawnPoint; // The position where the bullet spawns (usually in front of the player)
     public float bulletSpeed = 20f;
@@ -52,35 +54,28 @@ public class PlayerShoot : MonoBehaviour
         }
     }
 
-    void HandleGunRotation()
-    {
-        // Rotate player or gun towards the mouse cursor
-        mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 lookDirection = mousePosition - (Vector2)player.transform.position;
-        float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
-
-        // Use 'transform.up' instead of 'transform.right' to point upwards toward the mouse position
-        player.transform.rotation = Quaternion.Euler(0f, 0f, angle - 90f); // Subtract 90 degrees to fix the offset
-    }
 
     void Shoot()
     {
         // Get the mouse position in the world
-        mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        mousePosition.z = 0f; // Assuming a 2D game, set z to 0
 
         // Calculate the direction from the player to the mouse
-        direction = (mousePosition - (Vector2)player.transform.position).normalized;
+        direction = (mousePosition - (Vector2)player.tranform.position).normalized;
 
-        // Instantiate the bullet (store in a local variable)
-        GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, player.transform.rotation);
+        player.transform.right = direction;
+
+
+        // Instantiate the bullet
+        bulletPrefab = Instantiate(bulletPrefab, bulletSpawnPoint.position, player.transform.rotation);
 
         // Set the bullet's velocity in the direction of the mouse
-        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+        Rigidbody2D rb = bulletPrefab.GetComponent<Rigidbody2D>();
         rb.velocity = direction * bulletSpeed;
 
-        // Set hasShot to true to prevent further shooting (if desired)
+        // Set hasShot to true to prevent further shooting
         hasShot = true;
-
-        // Optional: Add logic to reset 'hasShot' after a cooldown or when allowed to shoot again
     }
 }
+

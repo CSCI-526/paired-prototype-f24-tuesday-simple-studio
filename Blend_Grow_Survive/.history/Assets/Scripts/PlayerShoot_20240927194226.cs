@@ -35,6 +35,7 @@ using UnityEngine;
 public class PlayerShoot : MonoBehaviour
 {
     [SerializeField] private GameObject player;
+    //[SerializeField] private GameObject bullet;
     public GameObject bulletPrefab; // Assign the bullet prefab in the inspector
     public Transform bulletSpawnPoint; // The position where the bullet spawns (usually in front of the player)
     public float bulletSpeed = 20f;
@@ -55,18 +56,17 @@ public class PlayerShoot : MonoBehaviour
     void HandleGunRotation()
     {
         // Rotate player or gun towards the mouse cursor
-        mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 lookDirection = mousePosition - (Vector2)player.transform.position;
+        mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition); // Using Input.mousePosition for simplicity
+        Vector2 lookDirection = mousePosition - (Vector2)player.transform.position; // Fixed typo: 'tranform' -> 'transform'
         float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
-
-        // Use 'transform.up' instead of 'transform.right' to point upwards toward the mouse position
-        player.transform.rotation = Quaternion.Euler(0f, 0f, angle - 90f); // Subtract 90 degrees to fix the offset
+        player.transform.rotation = Quaternion.Euler(0f, 0f, angle);
     }
 
     void Shoot()
     {
         // Get the mouse position in the world
-        mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition); // Using Input.mousePosition instead of Mouse.current
+        mousePosition.z = 0f; // Assuming a 2D game, set z to 0
 
         // Calculate the direction from the player to the mouse
         direction = (mousePosition - (Vector2)player.transform.position).normalized;

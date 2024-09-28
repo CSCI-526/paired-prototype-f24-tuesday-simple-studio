@@ -40,7 +40,7 @@ public class PlayerShoot : MonoBehaviour
     public float bulletSpeed = 20f;
 
     private bool hasShot = false; // To ensure player can only shoot once
-    private Vector2 mousePosition;
+    private Vector3 mousePosition; // Use Vector3 for mouse position, as ScreenToWorldPoint expects a 3D position
     private Vector2 direction;
 
     void Update()
@@ -54,22 +54,26 @@ public class PlayerShoot : MonoBehaviour
 
     void HandleGunRotation()
     {
-        // Rotate player or gun towards the mouse cursor
+        // Convert the mouse position to world space
         mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 lookDirection = mousePosition - (Vector2)player.transform.position;
-        float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
+        mousePosition.z = 0; // Since it's a 2D game, set z to 0
 
-        // Use 'transform.up' instead of 'transform.right' to point upwards toward the mouse position
-        player.transform.rotation = Quaternion.Euler(0f, 0f, angle - 90f); // Subtract 90 degrees to fix the offset
+        // Calculate direction from the player to the mouse
+        Vector2 lookDirection = (mousePosition - player.transform.position).normalized;
+
+        // Get the angle in degrees and rotate the player to face the mouse
+        float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
+        player.transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
     void Shoot()
     {
         // Get the mouse position in the world
         mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePosition.z = 0f; // Ensure the z value is 0 for 2D
 
         // Calculate the direction from the player to the mouse
-        direction = (mousePosition - (Vector2)player.transform.position).normalized;
+        direction = (mousePosition - player.transform.position).normalized;
 
         // Instantiate the bullet (store in a local variable)
         GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, player.transform.rotation);
