@@ -54,6 +54,7 @@ public class PlayerShoot : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && !hasShot) // Left mouse click and player hasn't shot yet
         {
             Shoot();
+            ms.DestroyPlayerBullet();
         }
     }
 
