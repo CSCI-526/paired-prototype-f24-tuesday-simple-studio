@@ -14,6 +14,8 @@ public class PlayerEatMass : MonoBehaviour
     public Text resultText;
     public Button restartButton;
     public bool eatammo = false;
+    public Text bulletText;
+    private bool hasBullet = false;
 
     public void UpdateMass()
     {
@@ -90,8 +92,9 @@ public class PlayerEatMass : MonoBehaviour
                     {
                         ms.RemoveMass(m.gameObject, ms.CreatedAmmos);
                         Destroy(m.gameObject);
-                        eatammo = true;
+                    
                         ms.CreateBullet();
+                        eatammo = true;
                     }
                 }
                 else if (m.gameObject.CompareTag("Enemy"))
@@ -125,6 +128,36 @@ public class PlayerEatMass : MonoBehaviour
     public void CheckAmmo()
     {
         CheckGameObject(Ammos);
+    }
+
+    public void AddBullet()
+    {
+        hasBullet = true;
+        UpdateBulletText();
+    }
+
+    public void RemoveBullet()
+    {
+        hasBullet = false;
+        UpdateBulletText();
+    }
+
+    public void UpdateBulletText()
+    {
+        if (bulletText != null)
+        {
+            if (hasBullet)
+            {
+                Debug.Log("111111");
+                bulletText.text = "# of bullet: 1";
+                bulletText.gameObject.SetActive(true);
+            }
+            else
+            {
+                Debug.Log("222222");
+                bulletText.gameObject.SetActive(false);
+            }
+        }
     }
 
     public void GameOver()

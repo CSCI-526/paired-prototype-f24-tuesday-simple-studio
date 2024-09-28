@@ -57,22 +57,12 @@ public class MassSpawner : MonoBehaviour
 
     public void CreateBullet()
     {
-        //Vector2 Position = Players[0].transform.position;
-        //GameObject m = Instantiate(bullet, Position, Quaternion.identity);
-        //CreatedBullet.Add(m);
+        Players[0].GetComponent<PlayerEatMass>().AddBullet();
     }
 
     public void DestroyPlayerBullet()
     {
-        if (CreatedBullet.Count > 0)
-        {
-            GameObject playerBullet = CreatedBullet[0];
-            if (playerBullet != null)
-            {
-                Destroy(playerBullet);  // Destroy the bullet
-                CreatedBullet.RemoveAt(0);
-            }
-        }
+        Players[0].GetComponent<PlayerEatMass>().RemoveBullet();
     }
 
     // Coroutine to spawn food at the speed defined by Time_To_Instantiate
@@ -118,15 +108,13 @@ public class MassSpawner : MonoBehaviour
         Vector2 Position = Vector2.zero;
         bool validPosition = false;
 
-        // Get the player's position
         Vector2 playerPosition = transform.position;
 
-        // Keep generating positions until we find one that is far enough from the player
         while (!validPosition)
         {
             Position = new Vector2(Random.Range(-20, 20), Random.Range(-20, 20)) / 2;
 
-            if (Vector2.Distance(Position, playerPosition) > 0.5f)
+            if (Vector2.Distance(Position, playerPosition) > 2f)
             {
                 validPosition = true;  // Position is valid
             }

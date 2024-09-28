@@ -9,6 +9,7 @@ public class PlayerMovements : MonoBehaviour
     MassSpawner ms;
     public float Speed = 5f;
     public GameObject Bullet;
+
     // Start is called before the first frame update
     void Start()
     {

@@ -55,6 +55,7 @@ public class PlayerShoot : MonoBehaviour
         HandleGunRotation();
         if (Input.GetMouseButtonDown(0) && !hasShot && mass_script.eatammo) // Left mouse click and player hasn't shot yet
         {
+            Debug.Log("Shooting");
             Shoot();
             ms.DestroyPlayerBullet();
         }
