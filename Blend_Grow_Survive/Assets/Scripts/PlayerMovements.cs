@@ -25,7 +25,7 @@ public class PlayerMovements : MonoBehaviour
         transform.position = Vector2.MoveTowards(transform.position, Direction, Speed_ * Time.deltaTime);
         if (ms.CreatedBullet.Count > 0 && ms.CreatedBullet[0] != null)
         {
-            ms.CreatedBullet[0].transform.position = transform.position;
+            //ms.CreatedBullet[0].transform.position = transform.position;
         }
         if (Input.GetKey(KeyCode.W))
         {

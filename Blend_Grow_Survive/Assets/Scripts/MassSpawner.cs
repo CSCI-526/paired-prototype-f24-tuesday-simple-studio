@@ -33,7 +33,7 @@ public class MassSpawner : MonoBehaviour
     public List<GameObject> CreatedAmmos = new List<GameObject>();
     public List<GameObject> CreatedBullet = new List<GameObject>();
     public GameObject bullet;
-
+    public float bulletOffset = 1f;
     private void Start()
     {
         // Create 5 enemies at the beginning
@@ -57,9 +57,9 @@ public class MassSpawner : MonoBehaviour
 
     public void CreateBullet()
     {
-        Vector2 Position = Players[0].transform.position;
-        GameObject m = Instantiate(bullet, Position, Quaternion.identity);
-        CreatedBullet.Add(m);
+        //Vector2 Position = Players[0].transform.position;
+        //GameObject m = Instantiate(bullet, Position, Quaternion.identity);
+        //CreatedBullet.Add(m);
     }
 
     public void DestroyPlayerBullet()

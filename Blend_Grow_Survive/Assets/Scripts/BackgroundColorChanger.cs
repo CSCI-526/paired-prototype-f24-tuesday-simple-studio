@@ -52,7 +52,7 @@ public class BackgroundColorChanger : MonoBehaviour
         {
             // Pick a random color from the full list (including white)
             currentColor = colors[Random.Range(0, colors.Count)];
-
+            
             // Set the square's material color to the selected color
             squareRenderer.material.color = currentColor;
 

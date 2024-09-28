@@ -71,7 +71,7 @@ public class PlayerShoot : MonoBehaviour
 
     void Shoot()
     {
-        if (ms.CreatedBullet.Count > 0)
+        if (ms.CreatedBullet.Count >= 0)
         {
             // Get the mouse position in the world
             mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
