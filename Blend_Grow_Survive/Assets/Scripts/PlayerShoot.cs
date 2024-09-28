@@ -38,11 +38,16 @@ public class PlayerShoot : MonoBehaviour
     public GameObject bulletPrefab; // Assign the bullet prefab in the inspector
     public Transform bulletSpawnPoint; // The position where the bullet spawns (usually in front of the player)
     public float bulletSpeed = 20f;
-
+    MassSpawner ms;
     private bool hasShot = false; // To ensure player can only shoot once
     private Vector2 mousePosition;
     private Vector2 direction;
 
+    void Start()
+    {
+        ms = MassSpawner.ins;
+        ms.Players.Add(gameObject);
+    }
     void Update()
     {
         HandleGunRotation();
@@ -65,22 +70,26 @@ public class PlayerShoot : MonoBehaviour
 
     void Shoot()
     {
-        // Get the mouse position in the world
-        mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        if (ms.CreatedBullet.Count > 0)
+        {
+            // Get the mouse position in the world
+            mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        // Calculate the direction from the player to the mouse
-        direction = (mousePosition - (Vector2)player.transform.position).normalized;
+            // Calculate the direction from the player to the mouse
+            direction = (mousePosition - (Vector2)player.transform.position).normalized;
 
-        // Instantiate the bullet (store in a local variable)
-        GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, player.transform.rotation);
+            // Instantiate the bullet (store in a local variable)
+            GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, player.transform.rotation);
 
-        // Set the bullet's velocity in the direction of the mouse
-        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-        rb.velocity = direction * bulletSpeed;
+            // Set the bullet's velocity in the direction of the mouse
+            Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+            rb.velocity = direction * bulletSpeed;
 
-        // Set hasShot to true to prevent further shooting (if desired)
-        hasShot = true;
+            // Set hasShot to true to prevent further shooting (if desired)
+            hasShot = true;
 
-        // Optional: Add logic to reset 'hasShot' after a cooldown or when allowed to shoot again
+            // Optional: Add logic to reset 'hasShot' after a cooldown or when allowed to shoot again
+        }
+
     }
 }
