@@ -55,7 +55,6 @@ public class PlayerShoot : MonoBehaviour
         HandleGunRotation();
         if (Input.GetMouseButtonDown(0) && !hasShot && mass_script.eatammo) // Left mouse click and player hasn't shot yet
         {
-            Debug.Log("Shooting");
             Shoot();
             ms.DestroyPlayerBullet();
         }
@@ -91,8 +90,6 @@ public class PlayerShoot : MonoBehaviour
 
             // Set hasShot to true to prevent further shooting (if desired)
             hasShot = true;
-
-            // Optional: Add logic to reset 'hasShot' after a cooldown or when allowed to shoot again
         }
 
     }

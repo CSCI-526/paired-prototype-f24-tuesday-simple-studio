@@ -148,15 +148,13 @@ public class PlayerEatMass : MonoBehaviour
         {
             if (hasBullet)
             {
-                Debug.Log("111111");
                 bulletText.text = "# of bullet: 1";
-                bulletText.gameObject.SetActive(true);
             }
             else
             {
-                Debug.Log("222222");
-                bulletText.gameObject.SetActive(false);
+                bulletText.text = "# of bullet: 0";
             }
+            bulletText.gameObject.SetActive(true);
         }
     }
 
