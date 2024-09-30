@@ -734,6 +734,7 @@ MonoBehaviour:
   - {fileID: 256303192}
   CreatedBullet: []
   bullet: {fileID: 7928638507455134860, guid: ed5434c3339b9cb42af4afc5035e031c, type: 3}
+  bulletOffset: 1
 --- !u!4 &1603899290
 Transform:
   m_ObjectHideFlags: 0
@@ -984,7 +985,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -864.1124, y: 617.83374}
+  m_AnchoredPosition: {x: -384.89, y: 72.166}
   m_SizeDelta: {x: 769.775, y: 144.3329}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1994122527
@@ -1000,7 +1001,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 0.26749808, g: 0.4943396, b: 0.051299337, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1014,7 +1015,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -1152,6 +1153,7 @@ MonoBehaviour:
   Player: {fileID: 2032329666}
   resultText: {fileID: 797850291}
   restartButton: {fileID: 1971939378}
+  eatammo: 0
   bulletText: {fileID: 1994122527}
 --- !u!114 &2032329668
 MonoBehaviour:
