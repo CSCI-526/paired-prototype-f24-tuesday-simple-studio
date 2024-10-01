@@ -6,7 +6,7 @@ public class PlayerMovements : MonoBehaviour
 {
 
     Actions actions;
-    MassSpawner ms;
+    ObjectGenerator ms;
     public float Speed = 5f;
     public GameObject Bullet;
 
@@ -14,7 +14,7 @@ public class PlayerMovements : MonoBehaviour
     void Start()
     {
         actions = GetComponent<Actions>();
-        ms = MassSpawner.ins;
+        ms = ObjectGenerator.ins;
         ms.Players.Add(gameObject);
     }
 

@@ -24,7 +24,7 @@ public class Actions : MonoBehaviour
         GameObject b = Instantiate(tMass, MassPosition.position, Quaternion.identity);
 
         // apply force
-        b.GetComponent<MassForce>().ApplyForce = true;
+        b.GetComponent<ObjectForce>().ApplyForce = true;
 
         // lose mass
         transform.localScale -= new Vector3(0.05f, 0.05f, 0.05f);
@@ -33,11 +33,11 @@ public class Actions : MonoBehaviour
     // Start is called before the first frame update
 
     PlayerEatMass mass_script;
-    MassSpawner ms;
+    ObjectGenerator ms;
     void Start()
     {
         mass_script = GetComponent<PlayerEatMass>();
-        ms = MassSpawner.ins;
+        ms = ObjectGenerator.ins;
     }
 
     // Update is called once per frame

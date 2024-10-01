@@ -7,12 +7,12 @@ public class BulletAttack : MonoBehaviour
     public LayerMask enemyLayerMask; // Assign the layer for enemies in the Inspector
 
     private Vector3 startPosition;  // To track where the bullet was spawned
-    MassSpawner ms;
+    ObjectGenerator ms;
 
     void Start()
     {
         startPosition = transform.position;  // Record the start position when the bullet is spawned
-        ms = MassSpawner.ins;  // Reference to the MassSpawner instance
+        ms = ObjectGenerator.ins;  // Reference to the MassSpawner instance
     }
 
     void Update()

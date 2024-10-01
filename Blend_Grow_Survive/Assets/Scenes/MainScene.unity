@@ -177,11 +177,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7928638507455134860, guid: ca8d757dd6499674d94180de8bdc72fc, type: 3}
       propertyPath: m_Name
-      value: ammo
+      value: Ammo
       objectReference: {fileID: 0}
     - target: {fileID: 7928638507455134860, guid: ca8d757dd6499674d94180de8bdc72fc, type: 3}
       propertyPath: m_TagString
-      value: ammo
+      value: Ammo
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -700,7 +700,7 @@ GameObject:
   - component: {fileID: 1603899290}
   - component: {fileID: 1603899289}
   m_Layer: 0
-  m_Name: mass Spawner
+  m_Name: ObjectGenerator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

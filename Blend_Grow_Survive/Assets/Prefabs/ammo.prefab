@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6617015815488157689}
   - component: {fileID: -1085536599570528674}
   m_Layer: 0
-  m_Name: ammo
+  m_Name: Ammo
   m_TagString: Mass
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -38,7 +38,7 @@ public class PlayerShoot : MonoBehaviour
     public GameObject bulletPrefab; // Assign the bullet prefab in the inspector
     public Transform bulletSpawnPoint; // The position where the bullet spawns (usually in front of the player)
     public float bulletSpeed = 20f;
-    MassSpawner ms;
+    ObjectGenerator ms;
     private bool hasShot = false; // To ensure player can only shoot once
     private Vector2 mousePosition;
     private Vector2 direction;
@@ -47,7 +47,7 @@ public class PlayerShoot : MonoBehaviour
     void Start()
     {
         mass_script = GetComponent<PlayerEatMass>();
-        ms = MassSpawner.ins;
+        ms = ObjectGenerator.ins;
         ms.Players.Add(gameObject);
     }
     void Update()

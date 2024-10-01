@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MassForce : MonoBehaviour
+public class ObjectForce : MonoBehaviour
 {
 
     public bool ApplyForce = false;

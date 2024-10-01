@@ -29,7 +29,7 @@ public class PlayerEatMass : MonoBehaviour
 
     public void UpdateAmmo()
     {
-        Ammos = GameObject.FindGameObjectsWithTag("ammo");
+        Ammos = GameObject.FindGameObjectsWithTag("Ammo");
     }
 
     public void RemoveMass(GameObject MassObject)
@@ -78,7 +78,7 @@ public class PlayerEatMass : MonoBehaviour
 
             if (Vector2.Distance(transform.position, m.position) <= playerRadius + objectRadius)
             {
-                if (m.gameObject.CompareTag("Mass") || m.gameObject.CompareTag("ammo"))
+                if (m.gameObject.CompareTag("Mass") || m.gameObject.CompareTag("Ammo"))
                 {
                     // Eat the mass/food
                     RemoveMass(m.gameObject);
@@ -197,7 +197,7 @@ public class PlayerEatMass : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    MassSpawner ms;
+    ObjectGenerator ms;
     // Start is called before the first frame update
     void Start()
     {
@@ -207,7 +207,7 @@ public class PlayerEatMass : MonoBehaviour
         InvokeRepeating("Check", 0, 0.1f);
         InvokeRepeating("CheckEnemy", 0, 0.1f);
         InvokeRepeating("CheckAmmo", 0, 0.1f);
-        ms = MassSpawner.ins;
+        ms = ObjectGenerator.ins;
 
         ms.Players.Add(gameObject);
     }

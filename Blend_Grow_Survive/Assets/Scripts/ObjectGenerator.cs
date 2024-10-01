@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MassSpawner : MonoBehaviour
+public class ObjectGenerator : MonoBehaviour
 {
 
     #region instance 
-    public static MassSpawner ins;
+    public static ObjectGenerator ins;
 
     private void Awake()
     {
