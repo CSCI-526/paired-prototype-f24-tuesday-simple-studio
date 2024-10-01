@@ -2,50 +2,44 @@ using UnityEngine;
 
 public class BulletAttack : MonoBehaviour
 {
-    public float bulletSpeed = 20f;  // Speed of the bullet
-    public float maxDistance = 20f;  // Maximum distance the bullet can travel
-    public LayerMask enemyLayerMask; // Assign the layer for enemies in the Inspector
+    public float bullet_speed = 20f; 
+    public float max_distance = 20f;  
+    public LayerMask enemy_layer_mask; 
 
-    private Vector3 startPosition;  // To track where the bullet was spawned
-    ObjectGenerator ms;
+    private Vector3 start_position; 
+    ObjectGenerator generator;
 
     void Start()
     {
-        startPosition = transform.position;  // Record the start position when the bullet is spawned
-        ms = ObjectGenerator.ins;  // Reference to the MassSpawner instance
+        start_position = transform.position;
+        generator = ObjectGenerator.ins; 
     }
 
     void Update()
     {
-        // Move the bullet forward in a straight line
-        transform.Translate(Vector3.up * bulletSpeed * Time.deltaTime);
+        // Destory the bullet if it is out of bounds
+        // Raycast to detect if the bullet is close to an enemy
+        // If the ray hit an enemy, destory the enemy and remove it from the Created Enemies list
+        // After that, destory the bullet itself
+        // Win the game if there are no enemies left 
+        transform.Translate(Vector3.up * bullet_speed * Time.deltaTime);
 
-        // Check if the bullet has traveled the max distance
-        if (Vector3.Distance(startPosition, transform.position) >= maxDistance)
+        if (Vector3.Distance(start_position, transform.position) >= max_distance)
         {
-            Destroy(gameObject);  // Destroy the bullet after it travels 20 units
+            Destroy(gameObject);  
         }
 
-        // Raycast to detect if the bullet is close to an enemy
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, bulletSpeed * Time.deltaTime, enemyLayerMask);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, bullet_speed * Time.deltaTime, enemy_layer_mask);
         if (hit.collider != null)
         {
-            // Check if the ray hit an enemy
             if (hit.collider.CompareTag("Enemy"))
             {
-                Destroy(hit.collider.gameObject);  // Destroy the enemy
-
-                // Remove the enemy from the CreatedEnemies list
-                ms.RemoveMass(hit.collider.gameObject, ms.CreatedEnemies);
-
-                // Destroy the bullet itself
+                Destroy(hit.collider.gameObject);
+                generator.RemoveObject(hit.collider.gameObject, generator.created_enemies);
                 Destroy(gameObject);
-
-                // Check if all enemies are destroyed
-                if (ms.CreatedEnemies.Count == 0)
+                if (generator.created_enemies.Count == 0)
                 {
-                    // If there are no enemies left, call WinGame
-                    FindObjectOfType<PlayerEatMass>().WinGame();
+                    FindObjectOfType<PlayerEat>().WinGame();
                 }
             }
         }

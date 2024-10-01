@@ -4,32 +4,30 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public Transform Target;  // The target (player) to follow
-    public Vector3 offset;    // Optional offset for the camera
+    public Transform target;  
+    public Vector3 offset;    
 
-    public float zoomFactor = 1.5f;  // Adjusts how zoom responds to player's size
-    public float minZoom = 5.0f;     // Minimum zoom level
-    public float maxZoom = 20.0f;    // Maximum zoom level
+    public float zoom_factor = 2f;  
+    public float min_zoom = 3f;     
+    public float max_zoom = 7f;    
 
-    private Camera cam;  // Reference to the camera component
-
+    private Camera cam; 
     // Start is called before the first frame update
     void Start()
     {
-        cam = Camera.main;  // Get the main camera component
+        cam = Camera.main; 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Target != null)
+        // Follow the player's position with  offset
+        // Adjust the camera's orthographic size between min_zoom and max_zoom
+        if (target != null)
         {
-            // Follow the target's position with an optional offset
-            transform.position = Target.position + offset;
-
-            // Adjust the camera's orthographic size based on the player's local scale
-            float targetZoom = Target.localScale.x * zoomFactor;
-            cam.orthographicSize = Mathf.Clamp(targetZoom, minZoom, maxZoom);
+            transform.position = target.position + offset;
+            float targetZoom = target.localScale.x * zoom_factor;
+            cam.orthographicSize = Mathf.Clamp(targetZoom, min_zoom, max_zoom);
         }
     }
 }

@@ -1,33 +1,3 @@
-
-// using UnityEngine;
-
-// public class PlayerShoot : MonoBehaviour
-// {
-//     public GameObject bulletPrefab;  // Drag your bullet prefab here
-//     public Transform bulletSpawnPoint;  // The point where the bullet will be spawned
-//     public float bulletSpeed = 20f;  // Speed of the bullet
-//     private bool hasShot = false;  // To keep track if the player has already shot
-
-//     void Update()
-//     {
-//         // Check if the left mouse button (0 is the left button) is pressed and the player hasn't shot yet
-//         if (Input.GetMouseButtonDown(0) && !hasShot)
-//         {
-//             Shoot();
-//         }
-//     }
-
-//     void Shoot()
-//     {
-//         // Instantiate the bullet and give it velocity
-//         GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
-//         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-//         rb.velocity = bulletSpawnPoint.up * bulletSpeed;
-
-//         // Mark that the player has already shot
-//         hasShot = true;
-//     }
-// }
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -35,61 +5,54 @@ using UnityEngine;
 public class PlayerShoot : MonoBehaviour
 {
     [SerializeField] private GameObject player;
-    public GameObject bulletPrefab; // Assign the bullet prefab in the inspector
-    public Transform bulletSpawnPoint; // The position where the bullet spawns (usually in front of the player)
-    public float bulletSpeed = 20f;
-    ObjectGenerator ms;
-    private bool hasShot = false; // To ensure player can only shoot once
-    private Vector2 mousePosition;
+    public GameObject bullet; 
+    public Transform bullet_start_point; 
+    public float bullet_speed = 20f;
+    ObjectGenerator generator;
+    private bool has_shot = false; // To ensure player can only shoot once
+    private Vector2 mouse_position;
     private Vector2 direction;
-    PlayerEatMass mass_script;
+    PlayerEat player_eat;
 
     void Start()
     {
-        mass_script = GetComponent<PlayerEatMass>();
-        ms = ObjectGenerator.ins;
-        ms.Players.Add(gameObject);
+        player_eat = GetComponent<PlayerEat>();
+        generator = ObjectGenerator.ins;
+        generator.players.Add(gameObject);
     }
     void Update()
     {
         HandleGunRotation();
-        if (Input.GetMouseButtonDown(0) && !hasShot && mass_script.eatammo) // Left mouse click and player hasn't shot yet
+        // If click the left mouse, player hasn't shot yet and player eat the ammo
+        if (Input.GetMouseButtonDown(0) && !has_shot && player_eat.eat_ammo) 
         {
             Shoot();
-            ms.DestroyPlayerBullet();
+            generator.DestroyPlayerBullet();
         }
     }
 
+    // handle the dirction of bullet followed by the mouse pointer
     void HandleGunRotation()
     {
-        // Rotate player or gun towards the mouse cursor
-        mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 lookDirection = mousePosition - (Vector2)player.transform.position;
+        mouse_position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 lookDirection = mouse_position - (Vector2)player.transform.position;
         float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
-
-        // Use 'transform.up' instead of 'transform.right' to point upwards toward the mouse position
-        player.transform.rotation = Quaternion.Euler(0f, 0f, angle - 90f); // Subtract 90 degrees to fix the offset
+        player.transform.rotation = Quaternion.Euler(0f, 0f, angle - 90f); 
     }
 
+    // use the mouse position as the target
+    // calculate the direction from the player to the target
+    // create the bullet instance and bullet's velocity
     void Shoot()
     {
-        if (ms.CreatedBullet.Count >= 0)
+        if (generator.created_bullet.Count >= 0)
         {
-            // Get the mouse position in the world
-            mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-            // Calculate the direction from the player to the mouse
-            direction = (mousePosition - (Vector2)player.transform.position).normalized;
-
-            // Instantiate the bullet (store in a local variable)
-            GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, player.transform.rotation);
-
-            // Set the bullet's velocity in the direction of the mouse
-            Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-            rb.velocity = direction * bulletSpeed;
-
-            // Set hasShot to true to prevent further shooting (if desired)
-            hasShot = true;
+            mouse_position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            direction = (mouse_position - (Vector2)player.transform.position).normalized;
+            GameObject bullet_instance = Instantiate(bullet, bullet_start_point.position, player.transform.rotation);
+            Rigidbody2D rb = bullet_instance.GetComponent<Rigidbody2D>();
+            rb.velocity = direction * bullet_speed;
+            has_shot = true;
         }
 
     }

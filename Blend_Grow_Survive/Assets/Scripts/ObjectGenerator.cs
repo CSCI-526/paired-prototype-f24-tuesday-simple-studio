@@ -17,87 +17,71 @@ public class ObjectGenerator : MonoBehaviour
     }
     #endregion
 
-    public GameObject Mass;
-    public List<GameObject> Players = new List<GameObject>();
-    public List<GameObject> CreatedMasses = new List<GameObject>();
-    public int MaxMass = 50;
-    public float Time_To_Instantiate = 0.5f;
-    public float Time_To_Instantiate_Enemy = 5.0f;
+    public GameObject food;
+    public List<GameObject> players = new List<GameObject>();
+    public List<GameObject> created_food = new List<GameObject>();
+    public int max_food = 50;
+    public float create_food_time = 0.5f;
+    public float create_enemy_time = 5.0f;
     public Vector2 pos;
-    public GameObject Enemy;
-    public int MaxEnemies = 10;
-    public List<GameObject> CreatedEnemies = new List<GameObject>();
-    public Vector2 enemySizeRange;
-    public float enemyspeed;
+    public GameObject enemy;
+    public int max_enemies = 10;
+    public List<GameObject> created_enemies = new List<GameObject>();
+    public Vector2 enemy_size_range;
+    public float enemy_speed;
 
-    public List<GameObject> CreatedAmmos = new List<GameObject>();
-    public List<GameObject> CreatedBullet = new List<GameObject>();
+    public List<GameObject> created_ammos = new List<GameObject>();
+    public List<GameObject> created_bullet = new List<GameObject>();
     public GameObject bullet;
-    public float bulletOffset = 1f;
+    public float bullet_offset = 1f;
     private void Start()
     {
-        // Create 5 enemies at the beginning
+        // Create 5 enemies with random position and size at the beginning
         for (int i = 0; i < 5; i++)
         {
-            if (CreatedEnemies.Count < MaxEnemies)
+            if (created_enemies.Count < max_enemies)
             {
                 Vector2 Position = GetRandomValidPosition();
-                GameObject m = Instantiate(Enemy, Position, Quaternion.identity);
-
-                // Generate random size for enemies
+                GameObject m = Instantiate(enemy, Position, Quaternion.identity);
                 float randomSize = Random.Range(1.0f, 3.0f);
                 m.transform.localScale = new Vector3(randomSize, randomSize, randomSize);
-
-                AddMass(m, CreatedEnemies);
+                AddObject(m, created_enemies);
             }
         }
         StartCoroutine(CreateFood());
         StartCoroutine(CreateEnemy());
     }
 
-    public void CreateBullet()
-    {
-        Players[0].GetComponent<PlayerEatMass>().AddBullet();
-    }
-
-    public void DestroyPlayerBullet()
-    {
-        Players[0].GetComponent<PlayerEatMass>().RemoveBullet();
-    }
-
-    // Coroutine to spawn food at the speed defined by Time_To_Instantiate
+    // If the number of food less than max_food, keep creating food
     public IEnumerator CreateFood()
     {
         while (true)
         {
-            yield return new WaitForSecondsRealtime(Time_To_Instantiate);
-
-            if (CreatedMasses.Count < MaxMass)
+            yield return new WaitForSecondsRealtime(create_food_time);
+            if (created_food.Count < max_food)
             {
                 Vector2 Position = GetRandomValidPosition();
-                GameObject m = Instantiate(Mass, Position, Quaternion.identity);
-                AddMass(m, CreatedMasses);
+                GameObject m = Instantiate(food, Position, Quaternion.identity);
+                AddObject(m, created_food);
             }
         }
     }
 
-    // Coroutine to spawn enemies at the speed defined by Time_To_Instantiate_Enemy
+    // If the number of enemy less than max_food, keep creating enemies
     public IEnumerator CreateEnemy()
     {
         while (true)
         {
-            yield return new WaitForSecondsRealtime(Time_To_Instantiate_Enemy);
+            yield return new WaitForSecondsRealtime(create_enemy_time);
 
-            if (CreatedEnemies.Count < MaxEnemies)
+            if (created_enemies.Count < max_enemies)
             {
                 Vector2 Position = GetRandomValidPosition();
-                GameObject m = Instantiate(Enemy, Position, Quaternion.identity);
-
-                // Generate random size for enemies
+                GameObject m = Instantiate(enemy, Position, Quaternion.identity);
                 float randomSize = Random.Range(1.0f, 3.0f);
                 m.transform.localScale = new Vector3(randomSize, randomSize, randomSize);
 
-                AddMass(m, CreatedEnemies);
+                AddObject(m, created_enemies);
             }
         }
     }
@@ -116,40 +100,50 @@ public class ObjectGenerator : MonoBehaviour
 
             if (Vector2.Distance(Position, playerPosition) > 2f)
             {
-                validPosition = true;  // Position is valid
+                validPosition = true;
             }
         }
-
         return Position;
+            }
+
+    public void CreateBullet()
+    {
+        players[0].GetComponent<PlayerEat>().AddBullet();
+        }
+
+    public void DestroyPlayerBullet()
+    {
+        players[0].GetComponent<PlayerEat>().RemoveBullet();
     }
 
-    public void AddMass(GameObject m, List<GameObject> CreatedMasses)
+    // add the gameobject to created_objects
+    public void AddObject(GameObject m, List<GameObject> created_objects)
     {
-        if (CreatedMasses.Contains(m) == false)
+        if (created_objects.Contains(m) == false)
         {
-            CreatedMasses.Add(m);
-            for (int i = 0; i < Players.Count; i++)
+            created_objects.Add(m);
+            for (int i = 0; i < players.Count; i++)
             {
-                PlayerEatMass pp = Players[i].GetComponent<PlayerEatMass>();
-                pp.AddMass(m);
+                PlayerEat pp = players[i].GetComponent<PlayerEat>();
+                pp.AddObject(m);
+            }
+        }
+    }
+    // remove the gameobject in created_objects
+    public void RemoveObject(GameObject m, List<GameObject> created_objects)
+    {
+        if (created_objects.Contains(m) == true)
+        {
+            created_objects.Remove(m);
+            for (int i = 0; i < players.Count; i++)
+            {
+                PlayerEat pp = players[i].GetComponent<PlayerEat>();
+                pp.RemoveObject(m);
             }
         }
     }
 
-    public void RemoveMass(GameObject m, List<GameObject> CreatedMasses)
-    {
-        if (CreatedMasses.Contains(m) == true)
-        {
-            CreatedMasses.Remove(m);
-            for (int i = 0; i < Players.Count; i++)
-            {
-                PlayerEatMass pp = Players[i].GetComponent<PlayerEatMass>();
-                pp.RemoveMass(m);
-            }
-        }
-    }
-
-    public void StopAllMassSpawning()
+    public void StopGenerating()
     {
         StopAllCoroutines();
     }

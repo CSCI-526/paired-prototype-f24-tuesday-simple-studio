@@ -122,11 +122,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &256303192 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7928638507455134860, guid: ca8d757dd6499674d94180de8bdc72fc, type: 3}
-  m_PrefabInstance: {fileID: 347158204}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &347158204
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -293,11 +288,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a35a52e5963df46ffa68d4b3937beead, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Target: {fileID: 2032329666}
+  target: {fileID: 2032329666}
   offset: {x: 0, y: 0, z: -20}
-  zoomFactor: 2
-  minZoom: 3
-  maxZoom: 7
+  zoom_factor: 2
+  min_zoom: 3
+  max_zoom: 7
 --- !u!1 &604051402
 GameObject:
   m_ObjectHideFlags: 0
@@ -621,7 +616,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a330a5eb96594cb6b4a723f260e08f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  squareRenderer: {fileID: 1095392774}
+  square_renderer: {fileID: 1095392774}
 --- !u!212 &1095392774
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -718,23 +713,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35bbc041fbdb64f4abf680b5d720345e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Mass: {fileID: 7928638507455134860, guid: 06ae4c6d4411641009b2d6baa7d1aab8, type: 3}
-  Players: []
-  CreatedMasses: []
-  MaxMass: 50
-  Time_To_Instantiate: 0.5
-  Time_To_Instantiate_Enemy: 5
+  food: {fileID: 3099519083497924173, guid: dca3b7dc8414c1e4a95da416b1b600de, type: 3}
+  players: []
+  created_food: []
+  max_food: 50
+  create_food_time: 0.5
+  create_enemy_time: 5
   pos: {x: 25, y: 8}
-  Enemy: {fileID: 7928638507455134860, guid: 649c291eac9f426498398c40408b929c, type: 3}
-  MaxEnemies: 10
-  CreatedEnemies: []
-  enemySizeRange: {x: 0, y: 0}
-  enemyspeed: 0
-  CreatedAmmos:
-  - {fileID: 256303192}
-  CreatedBullet: []
+  enemy: {fileID: 7928638507455134860, guid: 649c291eac9f426498398c40408b929c, type: 3}
+  max_enemies: 10
+  created_enemies: []
+  enemy_size_range: {x: 0, y: 0}
+  enemy_speed: 0
+  created_ammos: []
+  created_bullet: []
   bullet: {fileID: 7928638507455134860, guid: ed5434c3339b9cb42af4afc5035e031c, type: 3}
-  bulletOffset: 1
+  bullet_offset: 1
 --- !u!4 &1603899290
 Transform:
   m_ObjectHideFlags: 0
@@ -1064,8 +1058,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 829714ad0da8e4ada981b3630d1e763f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 10
-  Bullet: {fileID: 7928638507455134860, guid: ed5434c3339b9cb42af4afc5035e031c, type: 3}
+  speed: 10
+  bullet: {fileID: 7928638507455134860, guid: ed5434c3339b9cb42af4afc5035e031c, type: 3}
 --- !u!212 &2032329665
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1146,15 +1140,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b526f89938ef4638b0d7d719f11b832, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Mass: []
-  Enemies: []
-  Ammos:
-  - {fileID: 7928638507455134860, guid: ca8d757dd6499674d94180de8bdc72fc, type: 3}
-  Player: {fileID: 2032329666}
-  resultText: {fileID: 797850291}
-  restartButton: {fileID: 1971939378}
-  eatammo: 0
-  bulletText: {fileID: 1994122527}
+  food: []
+  enemies: []
+  ammos: []
+  player: {fileID: 2032329666}
+  result_text: {fileID: 797850291}
+  restart_button: {fileID: 1971939378}
+  eat_ammo: 0
+  bullet_text: {fileID: 1994122527}
 --- !u!114 &2032329668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1167,10 +1160,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c38817b5f65e4ecd8aaa9597952bf57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Mass: {fileID: 7928638507455134860, guid: 06ae4c6d4411641009b2d6baa7d1aab8, type: 3}
-  tMass: {fileID: 3099519083497924173, guid: 6bede3e66d4124df5bbbdb30179d3012, type: 3}
-  MassPosition: {fileID: 678039801}
-  Percentage: 0.1
+  food: {fileID: 3099519083497924173, guid: dca3b7dc8414c1e4a95da416b1b600de, type: 3}
+  throw_circle: {fileID: 3099519083497924173, guid: 6bede3e66d4124df5bbbdb30179d3012, type: 3}
+  position: {fileID: 678039801}
+  reduce_unit: 0.1
 --- !u!114 &2032329669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1196,9 +1189,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 2032329663}
-  bulletPrefab: {fileID: 7928638507455134860, guid: ed5434c3339b9cb42af4afc5035e031c, type: 3}
-  bulletSpawnPoint: {fileID: 2032329666}
-  bulletSpeed: 10
+  bullet: {fileID: 7928638507455134860, guid: ed5434c3339b9cb42af4afc5035e031c, type: 3}
+  bullet_start_point: {fileID: 2032329666}
+  bullet_speed: 10
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -6,31 +6,29 @@ public class PlayerMovements : MonoBehaviour
 {
 
     Actions actions;
-    ObjectGenerator ms;
-    public float Speed = 5f;
-    public GameObject Bullet;
+    ObjectGenerator generator;
+    public float speed = 5f;
+    public GameObject bullet;
 
     // Start is called before the first frame update
     void Start()
     {
         actions = GetComponent<Actions>();
-        ms = ObjectGenerator.ins;
-        ms.Players.Add(gameObject);
+        generator = ObjectGenerator.ins;
+        generator.players.Add(gameObject);
     }
 
     // Update is called once per frame
     void Update()
     {
-        float Speed_ = Speed / transform.localScale.x;
+        //player move with the mouse pointer
+        // If press the W key, throw something
+        float Speed_ = speed / transform.localScale.x;
         Vector2 Direction = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         transform.position = Vector2.MoveTowards(transform.position, Direction, Speed_ * Time.deltaTime);
-        if (ms.CreatedBullet.Count > 0 && ms.CreatedBullet[0] != null)
-        {
-            //ms.CreatedBullet[0].transform.position = transform.position;
-        }
         if (Input.GetKey(KeyCode.W))
         {
-            actions.ThrowMass();
+            actions.PlayerThrow();
         }
     }
 }

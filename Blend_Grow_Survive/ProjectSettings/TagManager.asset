@@ -8,6 +8,10 @@ TagManager:
   - Enemy
   - ammo
   - Ammo
+<<<<<<< HEAD
+  - Food
+=======
+>>>>>>> 06bd65cca0ce4ce043b99c9fc399a6cef8bb6903
   layers:
   - Default
   - TransparentFX
